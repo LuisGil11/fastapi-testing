@@ -1,33 +1,44 @@
-# Cree una aplicación sencilla en FastAPI que tenga dos endpoints: uno para obtener 
-# todos los registros de una base de datos de usuarios (simulada en una lista) y otro 
-# que solicite solo un registro por su id. Cree la pruebas unitarias que 
-# prueben: la existencia de ambos endpoint, el correcto funcionamiento cuando se 
-# soliciten todos los registros el correcto funcionamiento cuando se solicite uno 
-# en particular, por su id y que detecte la falla cuando se le suministre un id 
-# inválido (el id será el indice del usuario en la lista) A continuación cree el 
-# arhivo Dockerfile que permita conteneirizar la aplicación y el archivo docker-compose.yml 
-# para hacer el despliegue. No olvide que va a requerir un archivo de requirements.txt 
-# para instalar las dependencias.
-
-# Una vez finalizado comprima la carpeta en .zip o .rar y carguela 
-# en el lugar indicado en esta pregunta
-
-# Como base de datos use la siguiente lista: 
-usuarios = [ ["Pedro Perez", 28, "pperez@prueba.com"], ["María Rosales", 26, "mrosales@prueba.com"], ["Juan Martinez", 32, "jmartinez@prueba.com"], ["Ana Gómez", 24, "agomez@prueba.com"], ["Carlos Ramirez", 30, "cramirez@prueba.com"], ["Lucia Fernández", 29, "lfernandez@prueba.com"], ["Jorge Herrera", 27, "jherrera@prueba.com"], ["Laura Torres", 25, "ltorres@prueba.com"], ["Roberto Diaz", 33, "rdiaz@prueba.com"], ["Silvia Sánchez", 31, "ssanchez@prueba.com"], ["Andrés Pérez", 26, "aperez@prueba.com"], ["Natalia Morales", 28, "nmorales@prueba.com"], ["Miguel Campos", 35, "mcampos@prueba.com"], ["Elena Ríos", 22, "erios@prueba.com"], ["Pablo Castro", 34, "pcastro@prueba.com"], ["Claudia León", 29, "cleon@prueba.com"], ["Felipe Vargas", 32, "fvargas@prueba.com"], ["Verónica Salazar", 27, "vsalazar@prueba.com"], ["Luis García", 30, "lgarcia@prueba.com"], ["Andrea Peña", 25, "apena@prueba.com"], ["Raúl Martínez", 28, "rmartinez@prueba.com"], ["Carmen Ruiz", 31, "cruiz@prueba.com"], ["Francisco Flores", 33, "fflores@prueba.com"], ["Isabel Ramos", 26, "iramos@prueba.com"], ["Victor Castillo", 29, "vcastillo@prueba.com"]]
-
 from typing import Union
 from fastapi import FastAPI
+
+productos = [
+    ["Laptop HP", 750.00, 10],
+    ["Smartphone Samsung", 350.00, 20],
+    ["Tablet Apple", 499.99, 15],
+    ["Monitor Dell", 199.99, 8],
+    ["Teclado Logitech", 49.99, 25],
+    ["Ratón Microsoft", 29.99, 30],
+    ["Impresora Canon", 89.99, 12],
+    ["Auriculares Sony", 79.99, 18],
+    ["Cámara Nikon", 450.00, 5],
+    ["Disco Duro Seagate", 99.99, 22],
+    ["Memoria USB Kingston", 19.99, 50],
+    ["Router TP-Link", 59.99, 17],
+    ["Smartwatch Fitbit", 149.99, 14],
+    ["Altavoces Bose", 299.99, 6],
+    ["Proyector Epson", 399.99, 7],
+    ["Cargador Portátil Anker", 39.99, 28],
+    ["Micrófono Blue Yeti", 129.99, 10],
+    ["Webcam Logitech", 89.99, 9],
+    ["Silla Gamer DXRacer", 299.99, 4],
+    ["Mochila Targus", 79.99, 19],
+    ["Memoria RAM Corsair", 129.99, 11],
+    ["Tarjeta Gráfica NVIDIA", 499.99, 3],
+    ["Fuente de Poder EVGA", 59.99, 21],
+    ["Monitor ASUS", 179.99, 13],
+    ["SSD Samsung", 149.99, 16]
+]
 
 app = FastAPI()
 
 
-@app.get("/users")
+@app.get("/products")
 def read_root():
-    return usuarios
+    return productos
 
 
-@app.get("/users/{user_id}")
-def get_user(user_id: int):
-    if (0 <= user_id < len(usuarios)):
-        return usuarios[user_id]
-    return f'user with id = {user_id} not found.'
+@app.get("/products/{product_id}")
+def get_product(product_id: int):
+    if (0 <= product_id < len(productos)):
+        return productos[product_id]
+    return f'product with id = {product_id} not found.'
